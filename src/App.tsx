@@ -1,5 +1,13 @@
 import { useEffect, useReducer } from "react";
-import { Header, Loader, Error, StartScreen, Question } from "./components";
+import {
+  Header,
+  Loader,
+  Error,
+  StartScreen,
+  Question,
+  Footer,
+  FinishScreen,
+} from "./components";
 import { fetchQuestions as fetchQuestionsService } from "./services";
 import {
   quizReducer,
@@ -8,10 +16,13 @@ import {
 } from "./reducers/quiz.reducer";
 
 function App() {
-  const [{ questions, status, index }, dispatch] = useReducer(
+  const [{ questions, status, index, answer, points }, dispatch] = useReducer(
     quizReducer,
     initialState
   );
+
+  const showNextButton = answer !== null;
+  const isLastQuestion = index === questions.length - 1;
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -37,8 +48,30 @@ function App() {
           <StartScreen questionsLength={questions.length} dispatch={dispatch} />
         )}
         {status === "active" && (
-          <Question question={questions[index]} dispatch={dispatch} />
+          <>
+            <div className="progress">
+              <progress max={questions.length} value={index + 1} />
+              <p>
+                Question <strong>{index + 1}</strong> / {questions.length}
+              </p>
+              <p>
+                <strong>{points}</strong> / {questions.length * 10}
+              </p>
+            </div>
+            <Question
+              question={questions[index]}
+              dispatch={dispatch}
+              answer={answer}
+              correctAnswer={questions[index].correctOption}
+            />
+            <Footer
+              showNextButton={showNextButton}
+              isLastQuestion={isLastQuestion}
+              dispatch={dispatch}
+            />
+          </>
         )}
+        {status === "finished" && <FinishScreen dispatch={dispatch} />}
       </main>
     </div>
   );

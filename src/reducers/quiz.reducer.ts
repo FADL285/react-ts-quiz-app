@@ -15,6 +15,10 @@ export const ActionTypes = {
   LOAD_SUCCESS: "LOAD_SUCCESS",
   LOAD_ERROR: "LOAD_ERROR",
   START_QUIZ: "START_QUIZ",
+  ANSWER: "ANSWER",
+  NEXT_QUESTION: "NEXT_QUESTION",
+  FINISH_QUIZ: "FINISH_QUIZ",
+  RESTART_QUIZ: "RESTART_QUIZ",
 } as const;
 
 // Discriminated union ensures exhaustive type checking
@@ -22,7 +26,11 @@ export type QuizAction =
   | { type: typeof ActionTypes.LOAD_START }
   | { type: typeof ActionTypes.LOAD_SUCCESS; payload: Question[] }
   | { type: typeof ActionTypes.LOAD_ERROR }
-  | { type: typeof ActionTypes.START_QUIZ };
+  | { type: typeof ActionTypes.START_QUIZ }
+  | { type: typeof ActionTypes.ANSWER; payload: number }
+  | { type: typeof ActionTypes.NEXT_QUESTION }
+  | { type: typeof ActionTypes.FINISH_QUIZ }
+  | { type: typeof ActionTypes.RESTART_QUIZ };
 
 export const initialState: State = {
   questions: [],
@@ -42,6 +50,29 @@ export const quizReducer = (state: State, action: QuizAction): State => {
       return { ...state, status: "error" };
     case ActionTypes.START_QUIZ:
       return { ...state, status: "active" };
+    case ActionTypes.ANSWER: {
+      const isCorrectAnswer =
+        action.payload === state.questions[state.index].correctOption;
+
+      return {
+        ...state,
+        answer: action.payload,
+        points: state.points + (isCorrectAnswer ? 10 : 0),
+      };
+    }
+    case ActionTypes.NEXT_QUESTION:
+      if (state.index === state.questions.length - 1) {
+        return { ...state, status: "finished" };
+      }
+      return {
+        ...state,
+        index: state.index + 1,
+        answer: null,
+      };
+    case ActionTypes.FINISH_QUIZ:
+      return { ...state, status: "finished" };
+    case ActionTypes.RESTART_QUIZ:
+      return { ...initialState, status: "ready", questions: state.questions };
     default:
       throw new Error("Action type is not supported");
   }
