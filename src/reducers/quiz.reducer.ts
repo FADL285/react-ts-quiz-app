@@ -3,7 +3,7 @@ import type { Question } from "../types";
 // Types
 interface State {
   questions: Question[];
-  status: "loading" | "ready" | "finished" | "error";
+  status: "loading" | "ready" | "active" | "finished" | "error";
   index: number;
   answer: number | null;
   points: number;
@@ -40,6 +40,8 @@ export const quizReducer = (state: State, action: QuizAction): State => {
       return { ...state, status: "ready", questions: action.payload };
     case ActionTypes.LOAD_ERROR:
       return { ...state, status: "error" };
+    case ActionTypes.START_QUIZ:
+      return { ...state, status: "active" };
     default:
       throw new Error("Action type is not supported");
   }

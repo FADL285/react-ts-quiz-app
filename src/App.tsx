@@ -1,17 +1,14 @@
 import { useEffect, useReducer } from "react";
-import Header from "./Header";
+import { Header, Loader, Error, StartScreen, Question } from "./components";
 import { fetchQuestions as fetchQuestionsService } from "./services";
 import {
   quizReducer,
   initialState,
   ActionTypes,
 } from "./reducers/quiz.reducer";
-import Loader from "./Loader";
-import Error from "./Error";
-import StartScreen from "./StartScreen";
 
 function App() {
-  const [{ questions, status }, dispatch] = useReducer(
+  const [{ questions, status, index }, dispatch] = useReducer(
     quizReducer,
     initialState
   );
@@ -37,7 +34,10 @@ function App() {
         {status === "loading" && <Loader />}
         {status === "error" && <Error />}
         {status === "ready" && (
-          <StartScreen questionsLength={questions.length} />
+          <StartScreen questionsLength={questions.length} dispatch={dispatch} />
+        )}
+        {status === "active" && (
+          <Question question={questions[index]} dispatch={dispatch} />
         )}
       </main>
     </div>
