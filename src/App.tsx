@@ -14,6 +14,7 @@ import {
   initialState,
   ActionTypes,
 } from "./reducers/quiz.reducer";
+import Progress from "./components/Progress";
 
 function App() {
   const [{ questions, status, index, answer, points }, dispatch] = useReducer(
@@ -49,15 +50,11 @@ function App() {
         )}
         {status === "active" && (
           <>
-            <div className="progress">
-              <progress max={questions.length} value={index + 1} />
-              <p>
-                Question <strong>{index + 1}</strong> / {questions.length}
-              </p>
-              <p>
-                <strong>{points}</strong> / {questions.length * 10}
-              </p>
-            </div>
+            <Progress
+              questionsLength={questions.length}
+              currentQuestion={index + 1}
+              points={points}
+            />
             <Question
               question={questions[index]}
               dispatch={dispatch}
