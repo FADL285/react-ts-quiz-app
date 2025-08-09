@@ -5,17 +5,19 @@ import Timer from "./Timer";
 interface FooterProps {
   showNextButton: boolean;
   isLastQuestion: boolean;
+  quizDuration: number;
   dispatch: Dispatch<QuizAction>;
 }
 
 export default function Footer({
   showNextButton,
   isLastQuestion,
+  quizDuration,
   dispatch,
 }: FooterProps) {
   return (
     <>
-      <Timer />
+      <Timer quizDuration={quizDuration} dispatch={dispatch} />
       {showNextButton && (
         <footer>
           {isLastQuestion ? (

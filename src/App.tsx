@@ -16,6 +16,8 @@ import {
 } from "./reducers/quiz.reducer";
 import Progress from "./components/Progress";
 
+const QUIZ_DURATION_IN_MINUTES = 15;
+
 function App() {
   const [
     { questions, status, index, answer, points, totalPoints, highScore },
@@ -63,6 +65,7 @@ function App() {
               correctAnswer={questions[index].correctOption}
             />
             <Footer
+              quizDuration={QUIZ_DURATION_IN_MINUTES}
               showNextButton={showNextButton}
               isLastQuestion={isLastQuestion}
               dispatch={dispatch}
