@@ -264,26 +264,9 @@
       "points": 20
     },
     {
-      "question": "Which hook should you use to measure DOM layout synchronously after the DOM has been updated?",
-      "options": ["useEffect", "useLayoutEffect", "useMemo", "useCallback"],
-      "correctOption": 1,
-      "points": 20
-    },
-    {
       "question": "Which hook generates a stable unique id that matches between server and client for accessibility attributes?",
       "options": ["useRef", "useId", "useMemo", "useTransition"],
       "correctOption": 1,
-      "points": 20
-    },
-    {
-      "question": "What does a Suspense boundary's fallback render?",
-      "options": [
-        "An error message when a request fails",
-        "Nothing until data is available",
-        "A fallback UI while a child is 'suspending'",
-        "The previous screen forever"
-      ],
-      "correctOption": 2,
       "points": 20
     },
     {
