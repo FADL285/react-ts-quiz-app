@@ -1,6 +1,7 @@
 import type { Question } from "../types";
 
-const BASE_URL = "http://localhost:8000";
+const BASE_URL =
+  "https://my-json-server.typicode.com/FADL285/react-ts-quiz-app";
 
 export const fetchQuestions = async (): Promise<Question[]> => {
   const res = await fetch(`${BASE_URL}/questions`);
