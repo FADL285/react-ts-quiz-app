@@ -17,10 +17,8 @@ import {
 import Progress from "./components/Progress";
 
 function App() {
-  const [{ questions, status, index, answer, points }, dispatch] = useReducer(
-    quizReducer,
-    initialState
-  );
+  const [{ questions, status, index, answer, points, highScore }, dispatch] =
+    useReducer(quizReducer, initialState);
 
   const showNextButton = answer !== null;
   const isLastQuestion = index === questions.length - 1;
@@ -51,8 +49,8 @@ function App() {
         {status === "active" && (
           <>
             <Progress
-              questionsLength={questions.length}
-              currentQuestion={index + 1}
+              total={questions.length}
+              progress={answer !== null ? index + 1 : index}
               points={points}
             />
             <Question
@@ -68,7 +66,14 @@ function App() {
             />
           </>
         )}
-        {status === "finished" && <FinishScreen dispatch={dispatch} />}
+        {status === "finished" && (
+          <FinishScreen
+            points={points}
+            totalPoints={questions.length * 10}
+            highScore={highScore}
+            dispatch={dispatch}
+          />
+        )}
       </main>
     </div>
   );

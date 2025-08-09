@@ -7,6 +7,7 @@ interface State {
   index: number;
   answer: number | null;
   points: number;
+  highScore: number;
 }
 
 // Action types Enum
@@ -38,6 +39,9 @@ export const initialState: State = {
   index: 0,
   answer: null,
   points: 0,
+  highScore: localStorage.getItem("highScore")
+    ? parseInt(localStorage.getItem("highScore") || "0")
+    : 0,
 };
 
 export const quizReducer = (state: State, action: QuizAction): State => {
@@ -69,10 +73,23 @@ export const quizReducer = (state: State, action: QuizAction): State => {
         index: state.index + 1,
         answer: null,
       };
-    case ActionTypes.FINISH_QUIZ:
-      return { ...state, status: "finished" };
+    case ActionTypes.FINISH_QUIZ: {
+      const newHighScore =
+        state.points > state.highScore ? state.points : state.highScore;
+      localStorage.setItem("highScore", newHighScore.toString());
+      return {
+        ...state,
+        status: "finished",
+        highScore: newHighScore,
+      };
+    }
     case ActionTypes.RESTART_QUIZ:
-      return { ...initialState, status: "ready", questions: state.questions };
+      return {
+        ...initialState,
+        status: "ready",
+        questions: state.questions,
+        highScore: state.highScore,
+      };
     default:
       throw new Error("Action type is not supported");
   }

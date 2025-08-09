@@ -1,22 +1,22 @@
 interface ProgressProps {
-  questionsLength: number;
-  currentQuestion: number;
+  total: number;
+  progress: number;
   points: number;
 }
 
 export default function Progress({
-  questionsLength,
-  currentQuestion,
+  total,
+  progress,
   points,
 }: ProgressProps) {
   return (
     <div className="progress">
-      <progress max={questionsLength} value={currentQuestion} />
+      <progress max={total} value={progress} />
       <p>
-        Question <strong>{currentQuestion}</strong> / {questionsLength}
+        Question <strong>{progress}</strong> / {total}
       </p>
       <p>
-        <strong>{points}</strong> / {questionsLength * 10} points
+        <strong>{points}</strong> / {total * 10} points
       </p>
     </div>
   );
