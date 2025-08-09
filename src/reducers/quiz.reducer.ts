@@ -7,6 +7,7 @@ interface State {
   index: number;
   answer: number | null;
   points: number;
+  totalPoints: number;
   highScore: number;
 }
 
@@ -39,6 +40,7 @@ export const initialState: State = {
   index: 0,
   answer: null,
   points: 0,
+  totalPoints: 0,
   highScore: localStorage.getItem("highScore")
     ? parseInt(localStorage.getItem("highScore") || "0")
     : 0,
@@ -49,7 +51,12 @@ export const quizReducer = (state: State, action: QuizAction): State => {
     case ActionTypes.LOAD_START:
       return { ...state, status: "loading" };
     case ActionTypes.LOAD_SUCCESS:
-      return { ...state, status: "ready", questions: action.payload };
+      return {
+        ...state,
+        status: "ready",
+        questions: action.payload,
+        totalPoints: action.payload.reduce((acc, curr) => acc + curr.points, 0),
+      };
     case ActionTypes.LOAD_ERROR:
       return { ...state, status: "error" };
     case ActionTypes.START_QUIZ:
@@ -61,7 +68,9 @@ export const quizReducer = (state: State, action: QuizAction): State => {
       return {
         ...state,
         answer: action.payload,
-        points: state.points + (isCorrectAnswer ? 10 : 0),
+        points:
+          state.points +
+          (isCorrectAnswer ? state.questions[state.index].points : 0),
       };
     }
     case ActionTypes.NEXT_QUESTION:
