@@ -1,0 +1,301 @@
+{
+  "questions": [
+    {
+      "question": "Which is the most popular JavaScript framework?",
+      "options": ["Angular", "React", "Svelte", "Vue"],
+      "correctOption": 1,
+      "points": 10
+    },
+    {
+      "question": "Which company invented React?",
+      "options": ["Google", "Apple", "Netflix", "Facebook"],
+      "correctOption": 3,
+      "points": 10
+    },
+    {
+      "question": "What's the fundamental building block of React apps?",
+      "options": ["Components", "Blocks", "Elements", "Effects"],
+      "correctOption": 0,
+      "points": 10
+    },
+    {
+      "question": "What's the name of the syntax we use to describe the UI in React components?",
+      "options": ["FBJ", "Babel", "JSX", "ES2015"],
+      "correctOption": 2,
+      "points": 10
+    },
+    {
+      "question": "How does data flow naturally in React apps?",
+      "options": [
+        "From parents to children",
+        "From children to parents",
+        "Both ways",
+        "The developers decides"
+      ],
+      "correctOption": 0,
+      "points": 10
+    },
+    {
+      "question": "How to pass data into a child component?",
+      "options": ["State", "Props", "PropTypes", "Parameters"],
+      "correctOption": 1,
+      "points": 10
+    },
+    {
+      "question": "When to use derived state?",
+      "options": [
+        "Whenever the state should not trigger a re-render",
+        "Whenever the state can be synchronized with an effect",
+        "Whenever the state should be accessible to all components",
+        "Whenever the state can be computed from another state variable"
+      ],
+      "correctOption": 3,
+      "points": 30
+    },
+    {
+      "question": "What triggers a UI re-render in React?",
+      "options": [
+        "Running an effect",
+        "Passing props",
+        "Updating state",
+        "Adding event listeners to DOM elements"
+      ],
+      "correctOption": 2,
+      "points": 20
+    },
+    {
+      "question": "When do we directly \"touch\" the DOM in React?",
+      "options": [
+        "When we need to listen to an event",
+        "When we need to change the UI",
+        "When we need to add styles",
+        "Almost never"
+      ],
+      "correctOption": 3,
+      "points": 20
+    },
+    {
+      "question": "In what situation do we use a callback to update state?",
+      "options": [
+        "When updating the state will be slow",
+        "When the updated state is very data-intensive",
+        "When the state update should happen faster",
+        "When the new state depends on the previous state"
+      ],
+      "correctOption": 3,
+      "points": 30
+    },
+    {
+      "question": "If we pass a function to useState, when will that function be called?",
+      "options": [
+        "On each re-render",
+        "Each time we update the state",
+        "Only on the initial render",
+        "The first time we update the state"
+      ],
+      "correctOption": 2,
+      "points": 30
+    },
+    {
+      "question": "Which hook to use for an API request on the component's initial render?",
+      "options": ["useState", "useEffect", "useRef", "useReducer"],
+      "correctOption": 1,
+      "points": 10
+    },
+    {
+      "question": "Which variables should go into the useEffect dependency array?",
+      "options": [
+        "Usually none",
+        "All our state variables",
+        "All state and props referenced in the effect",
+        "All variables needed for clean up"
+      ],
+      "correctOption": 2,
+      "points": 30
+    },
+    {
+      "question": "An effect will always run on the initial render.",
+      "options": [
+        "True",
+        "It depends on the dependency array",
+        "False",
+        "In depends on the code in the effect"
+      ],
+      "correctOption": 0,
+      "points": 30
+    },
+    {
+      "question": "When will an effect run if it doesn't have a dependency array?",
+      "options": [
+        "Only when the component mounts",
+        "Only when the component unmounts",
+        "The first time the component re-renders",
+        "Each time the component is re-rendered"
+      ],
+      "correctOption": 3,
+      "points": 20
+    },
+    {
+      "question": "What is the best value to use as a key when rendering a list in React?",
+      "options": [
+        "The array index",
+        "A randomly generated value on each render",
+        "A stable unique identifier from the data",
+        "The DOM id attribute"
+      ],
+      "correctOption": 2,
+      "points": 20
+    },
+    {
+      "question": "Which hook memoizes a function definition to keep its identity stable between renders?",
+      "options": ["useMemo", "useRef", "useCallback", "useEffect"],
+      "correctOption": 2,
+      "points": 20
+    },
+    {
+      "question": "What is the primary purpose of useMemo?",
+      "options": [
+        "Run side effects after render",
+        "Persist mutable values across renders",
+        "Memoize the result of an expensive calculation",
+        "Prevent re-renders entirely"
+      ],
+      "correctOption": 2,
+      "points": 20
+    },
+    {
+      "question": "Which hook lets you store a mutable value that does not trigger a re-render when it changes?",
+      "options": ["useMemo", "useRef", "useState", "useCallback"],
+      "correctOption": 1,
+      "points": 20
+    },
+    {
+      "question": "What is the recommended way to avoid prop drilling for deeply nested components?",
+      "options": [
+        "Global variables",
+        "Context API (createContext + useContext)",
+        "Passing props through every level",
+        "Cloning elements with extra props"
+      ],
+      "correctOption": 1,
+      "points": 20
+    },
+    {
+      "question": "When does a useEffect cleanup function run?",
+      "options": [
+        "Immediately after render",
+        "Before every state update",
+        "Before the next effect run and on unmount",
+        "Only when dependencies change to a truthy value"
+      ],
+      "correctOption": 2,
+      "points": 20
+    },
+    {
+      "question": "Which API helps mark a state update as non-urgent to keep the UI responsive?",
+      "options": [
+        "useDeferredValue",
+        "startTransition",
+        "useTransition",
+        "useLayoutEffect"
+      ],
+      "correctOption": 1,
+      "points": 30
+    },
+    {
+      "question": "Why might certain effects and render lifecycles run twice in development?",
+      "options": [
+        "Because of React.memo",
+        "Because of React.StrictMode in development",
+        "Because of concurrent rendering in production",
+        "Because of hydration mismatches"
+      ],
+      "correctOption": 1,
+      "points": 20
+    },
+    {
+      "question": "What can Error Boundaries catch?",
+      "options": [
+        "Errors thrown in event handlers",
+        "Errors thrown during rendering, in lifecycle methods, and in constructors of child components",
+        "Syntax errors in your code",
+        "Network errors from fetch"
+      ],
+      "correctOption": 1,
+      "points": 30
+    },
+    {
+      "question": "Which technique can prevent a child component from re-rendering when its props haven't changed?",
+      "options": ["useEffect", "React.memo", "useId", "StrictMode"],
+      "correctOption": 1,
+      "points": 20
+    },
+    {
+      "question": "In React 18, when are multiple state updates automatically batched?",
+      "options": [
+        "Only inside React event handlers",
+        "Only inside setTimeout callbacks",
+        "In most cases, including timeouts, promises, and native events",
+        "Never; batching must be enabled manually"
+      ],
+      "correctOption": 2,
+      "points": 30
+    },
+    {
+      "question": "Which hook should libraries use to safely subscribe to an external store in React 18?",
+      "options": [
+        "useEffect",
+        "useImperativeHandle",
+        "useSyncExternalStore",
+        "useLayoutEffect"
+      ],
+      "correctOption": 2,
+      "points": 20
+    },
+    {
+      "question": "A controlled input in React is one where...",
+      "options": [
+        "The value is read from the DOM when needed",
+        "The value is managed by React state and updated via onChange",
+        "The browser keeps the value and React reads it on submit",
+        "It uses a ref to read the value"
+      ],
+      "correctOption": 1,
+      "points": 20
+    },
+    {
+      "question": "Which hook should you use to measure DOM layout synchronously after the DOM has been updated?",
+      "options": ["useEffect", "useLayoutEffect", "useMemo", "useCallback"],
+      "correctOption": 1,
+      "points": 20
+    },
+    {
+      "question": "Which hook generates a stable unique id that matches between server and client for accessibility attributes?",
+      "options": ["useRef", "useId", "useMemo", "useTransition"],
+      "correctOption": 1,
+      "points": 20
+    },
+    {
+      "question": "What does a Suspense boundary's fallback render?",
+      "options": [
+        "An error message when a request fails",
+        "Nothing until data is available",
+        "A fallback UI while a child is 'suspending'",
+        "The previous screen forever"
+      ],
+      "correctOption": 2,
+      "points": 20
+    },
+    {
+      "question": "Where should you place the key prop when rendering a list?",
+      "options": [
+        "On the parent container wrapping the list",
+        "On the element returned from the array map, at the top level of the list item",
+        "On every nested child element inside the list item",
+        "On a random sibling element"
+      ],
+      "correctOption": 1,
+      "points": 20
+    }
+  ]
+}
