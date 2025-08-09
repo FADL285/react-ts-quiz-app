@@ -1,69 +1,100 @@
-# React + TypeScript + Vite
+# React Quiz App (React + TypeScript + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small quiz application built with React 19, TypeScript, and Vite. Questions are fetched from a configurable API (supports both `my-json-server` and local `json-server`).
 
-Currently, two official plugins are available:
+### Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React 19 + TypeScript + Vite
+- Global quiz state via `useReducer`
+- Timed quiz with a countdown timer
+- High score persisted in `localStorage`
+- Strict ESLint + TypeScript settings
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 1) Clone and install
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone <repo-url>
+cd react-quiz-app
+npm ci
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2) Configure environment
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+This app reads the API base URL from `VITE_API_BASE_URL`. Create an `.env` file at the project root. Example values below:
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# .env
+# Remote (my-json-server)
+VITE_API_BASE_URL=https://my-json-server.typicode.com/<your-username>/<your-repo>
+
+# OR local (json-server)
+# VITE_API_BASE_URL=http://localhost:8000
 ```
+
+Notes:
+
+- The app will throw a clear error at runtime if `VITE_API_BASE_URL` is missing.
+- Do not commit secrets; `.env` should be git-ignored.
+
+### 3) Start the app
+
+```bash
+npm run dev
+```
+
+Open `http://localhost:5173`.
+
+## Data Source Options
+
+You can host the `db.json` in two ways:
+
+### Option A: my-json-server (remote, read-only)
+
+1. Push your `db.json` to a public GitHub repo.
+2. Set `VITE_API_BASE_URL` to:
+   - `https://my-json-server.typicode.com/<your-username>/<your-repo>`
+3. The app will fetch from `<baseUrl>/questions`.
+
+### Option B: Local json-server
+
+1. Run the included script to serve `db.json` locally:
+
+```bash
+npm run server
+```
+
+2. Set `VITE_API_BASE_URL` to `http://localhost:8000`.
+3. The app will fetch from `http://localhost:8000/questions`.
+
+## Available Scripts
+
+- `npm run dev`: Start Vite dev server
+- `npm run build`: Type-check and build for production
+- `npm run preview`: Preview the production build
+- `npm run lint`: Run ESLint
+- `npm run server`: Start `json-server` at `http://localhost:8000` serving `db.json`
+
+## Project Structure
+
+- `src/App.tsx`: App shell and screen routing by quiz status
+- `src/reducers/quiz.reducer.ts`: Quiz state machine and actions
+- `src/components/*`: UI components (question, progress, timer, finish screen, etc.)
+- `src/services/index.ts`: API client using `VITE_API_BASE_URL`
+- `db.json`: Questions dataset (used by `json-server` or my-json-server)
+
+## Environment & Security
+
+- Uses `.env` for runtime configuration; never hardcode secrets.
+- `VITE_API_BASE_URL` is validated at startup to avoid silent misconfiguration.
+
+## Accessibility
+
+- Semantic HTML elements and keyboard-friendly buttons.
+- Consider running Lighthouse or axe-core audits during development.
+
+## Notes
+
+- Tested with Node 20+.
+- If you change the dataset shape, update `src/types/index.ts` accordingly.
