@@ -14,13 +14,15 @@ export const ActionTypes = {
   LOAD_START: "LOAD_START",
   LOAD_SUCCESS: "LOAD_SUCCESS",
   LOAD_ERROR: "LOAD_ERROR",
+  START_QUIZ: "START_QUIZ",
 } as const;
 
 // Discriminated union ensures exhaustive type checking
 export type QuizAction =
   | { type: typeof ActionTypes.LOAD_START }
   | { type: typeof ActionTypes.LOAD_SUCCESS; payload: Question[] }
-  | { type: typeof ActionTypes.LOAD_ERROR };
+  | { type: typeof ActionTypes.LOAD_ERROR }
+  | { type: typeof ActionTypes.START_QUIZ };
 
 export const initialState: State = {
   questions: [],
@@ -38,5 +40,7 @@ export const quizReducer = (state: State, action: QuizAction): State => {
       return { ...state, status: "ready", questions: action.payload };
     case ActionTypes.LOAD_ERROR:
       return { ...state, status: "error" };
+    default:
+      throw new Error("Action type is not supported");
   }
 };

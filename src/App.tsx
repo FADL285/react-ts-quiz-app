@@ -1,9 +1,14 @@
 import { useEffect, useReducer } from "react";
 import Header from "./Header";
 import { fetchQuestions as fetchQuestionsService } from "./services";
-import { quizReducer, initialState, ActionTypes } from "./reducers/quiz";
+import {
+  quizReducer,
+  initialState,
+  ActionTypes,
+} from "./reducers/quiz.reducer";
 import Loader from "./Loader";
 import Error from "./Error";
+import StartScreen from "./StartScreen";
 
 function App() {
   const [{ questions, status }, dispatch] = useReducer(
@@ -32,13 +37,7 @@ function App() {
         {status === "loading" && <Loader />}
         {status === "error" && <Error />}
         {status === "ready" && (
-          <div className="questions">
-            <h3>Questions</h3>
-
-            {questions.map((question) => (
-              <div key={question.question}>{question.question}</div>
-            ))}
-          </div>
+          <StartScreen questionsLength={questions.length} />
         )}
       </main>
     </div>
