@@ -1,19 +1,9 @@
-import type { Dispatch } from "react";
-import { ActionTypes, type QuizAction } from "../reducers/quiz.reducer";
+import { ActionTypes } from "../reducers/quiz.reducer";
+import { useQuiz } from "@/hooks/useQuiz";
 
-interface FinishScreenProps {
-  points: number;
-  totalPoints: number;
-  highScore: number;
-  dispatch: Dispatch<QuizAction>;
-}
+export default function FinishScreen() {
+  const { highScore, points, totalPoints, dispatch } = useQuiz();
 
-export default function FinishScreen({
-  points,
-  totalPoints,
-  highScore,
-  dispatch,
-}: FinishScreenProps) {
   const percentage = (points / totalPoints) * 100;
   let emoji = "🎉";
   if (percentage === 100) emoji = "🥇";

@@ -1,20 +1,11 @@
-import type { Dispatch } from "react";
-import { ActionTypes, type QuizAction } from "../reducers/quiz.reducer";
-import type { Question as QuestionType } from "../types";
+import { ActionTypes } from "../reducers/quiz.reducer";
+import { useQuiz } from "@/hooks/useQuiz";
 
-interface QuestionProps {
-  question: QuestionType;
-  dispatch: Dispatch<QuizAction>;
-  correctAnswer: number;
-  answer: number | null;
-}
+export default function Question() {
+  const { answer, questions, index, dispatch } = useQuiz();
+  const question = questions[index];
+  const correctAnswer = question.correctOption;
 
-export default function Question({
-  question,
-  dispatch,
-  correctAnswer,
-  answer,
-}: QuestionProps) {
   const hasAnswered = answer !== null;
 
   return (

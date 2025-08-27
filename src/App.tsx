@@ -1,4 +1,3 @@
-import { useEffect, useReducer } from "react";
 import {
   Header,
   Loader,
@@ -7,80 +6,40 @@ import {
   Question,
   Footer,
   FinishScreen,
-} from "./components";
-import { fetchQuestions as fetchQuestionsService } from "./services";
-import {
-  quizReducer,
-  initialState,
-  ActionTypes,
-} from "./reducers/quiz.reducer";
-import Progress from "./components/Progress";
+  Progress,
+} from "@/components";
+import { QuizProvider } from "@/providers/quiz-provider";
+import { useQuiz } from "@/hooks/useQuiz";
 
 const QUIZ_DURATION_IN_MINUTES = 15;
 
+function QuizContent() {
+  const { status } = useQuiz();
+
+  return (
+    <main className="main">
+      {status === "loading" && <Loader />}
+      {status === "error" && <Error />}
+      {status === "ready" && <StartScreen />}
+      {status === "active" && (
+        <>
+          <Progress />
+          <Question />
+          <Footer quizDuration={QUIZ_DURATION_IN_MINUTES} />
+        </>
+      )}
+      {status === "finished" && <FinishScreen />}
+    </main>
+  );
+}
+
 function App() {
-  const [
-    { questions, status, index, answer, points, totalPoints, highScore },
-    dispatch,
-  ] = useReducer(quizReducer, initialState);
-
-  const showNextButton = answer !== null;
-  const isLastQuestion = index === questions.length - 1;
-
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        dispatch({ type: ActionTypes.LOAD_START });
-        const data = await fetchQuestionsService();
-        dispatch({ type: ActionTypes.LOAD_SUCCESS, payload: data });
-      } catch (error) {
-        console.error(error);
-        dispatch({ type: ActionTypes.LOAD_ERROR });
-      }
-    };
-    fetchQuestions();
-  }, []);
-
   return (
     <div className="app">
       <Header />
-      <main className="main">
-        {status === "loading" && <Loader />}
-        {status === "error" && <Error />}
-        {status === "ready" && (
-          <StartScreen questionsLength={questions.length} dispatch={dispatch} />
-        )}
-        {status === "active" && (
-          <>
-            <Progress
-              total={questions.length}
-              progress={answer !== null ? index + 1 : index}
-              points={points}
-              totalPoints={totalPoints}
-            />
-            <Question
-              question={questions[index]}
-              dispatch={dispatch}
-              answer={answer}
-              correctAnswer={questions[index].correctOption}
-            />
-            <Footer
-              quizDuration={QUIZ_DURATION_IN_MINUTES}
-              showNextButton={showNextButton}
-              isLastQuestion={isLastQuestion}
-              dispatch={dispatch}
-            />
-          </>
-        )}
-        {status === "finished" && (
-          <FinishScreen
-            points={points}
-            totalPoints={totalPoints}
-            highScore={highScore}
-            dispatch={dispatch}
-          />
-        )}
-      </main>
+      <QuizProvider>
+        <QuizContent />
+      </QuizProvider>
     </div>
   );
 }

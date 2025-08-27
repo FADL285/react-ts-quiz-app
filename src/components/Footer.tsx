@@ -1,20 +1,16 @@
-import type { Dispatch } from "react";
-import { ActionTypes, type QuizAction } from "../reducers/quiz.reducer";
+import { ActionTypes } from "../reducers/quiz.reducer";
 import Timer from "./Timer";
+import { useQuiz } from "@/hooks/useQuiz";
 
 interface FooterProps {
-  showNextButton: boolean;
-  isLastQuestion: boolean;
   quizDuration: number;
-  dispatch: Dispatch<QuizAction>;
 }
 
-export default function Footer({
-  showNextButton,
-  isLastQuestion,
-  quizDuration,
-  dispatch,
-}: FooterProps) {
+export default function Footer({ quizDuration }: FooterProps) {
+  const { answer, questionsLength, index, dispatch } = useQuiz();
+  const showNextButton = answer !== null;
+  const isLastQuestion = index === questionsLength - 1;
+
   return (
     <>
       <Timer quizDuration={quizDuration} dispatch={dispatch} />

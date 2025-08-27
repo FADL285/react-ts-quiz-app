@@ -1,15 +1,9 @@
-import type { Dispatch } from "react";
-import { ActionTypes, type QuizAction } from "../reducers/quiz.reducer";
+import { ActionTypes } from "../reducers/quiz.reducer";
+import { useQuiz } from "@/hooks/useQuiz";
 
-interface StartScreenProps {
-  questionsLength: number;
-  dispatch: Dispatch<QuizAction>;
-}
+export default function StartScreen() {
+  const { questionsLength, dispatch } = useQuiz();
 
-export default function StartScreen({
-  questionsLength,
-  dispatch,
-}: StartScreenProps) {
   return (
     <div className="start">
       <h2>Welcome to the React Quiz!</h2>

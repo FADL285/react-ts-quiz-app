@@ -1,16 +1,8 @@
-interface ProgressProps {
-  total: number;
-  progress: number;
-  points: number;
-  totalPoints: number;
-}
+import { useQuiz } from "@/hooks/useQuiz";
 
-export default function Progress({
-  total,
-  progress,
-  points,
-  totalPoints,
-}: ProgressProps) {
+export default function Progress() {
+  const { questionsLength: total, progress, points, totalPoints } = useQuiz();
+
   return (
     <div className="progress">
       <progress max={total} value={progress} />

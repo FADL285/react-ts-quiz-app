@@ -1,7 +1,7 @@
 import type { Question } from "../types";
 
 // Types
-interface State {
+export interface State {
   questions: Question[];
   status: "loading" | "ready" | "active" | "finished" | "error";
   index: number;
